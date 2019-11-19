@@ -1,0 +1,106 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <div class="row justify-content-between">
+            <div class="col-6">
+              <h3 class="mb-0">
+                Expenses - <small>Showing for {{months[month]}}</small>
+              </h3>
+              <span *ngIf="error.show && error.type=='warning'" class="badge badge-pill badge-danger text-uppercase">
+                <strong *ngIf="error.type == 'warning'">Warning!</strong> {{error.message}}
+              </span>
+              <div class="form-group">
+                <select class="form-control" id="monthselection" [(ngModel)]="month" (ngModelChange)="onMonthchange()">
+                  <option *ngFor="let sMonth of months; let i = index" [value]="i">{{sMonth}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-4 text-right">
+              <h3 class="mb-0">
+                &nbsp;
+              </h3>
+              <div class="form-group">
+                <input type="text" id="input-username" class="form-control form-control-alternative"
+                  [(ngModel)]="searchText" placeholder="Search for expenses">
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div cla
+            ss="col-8">
+              <small>Total Expenses: {{totalExpenses | currency}}</small>
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Name</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Created by</th>
+                <th scope="col">Total Expenses Percentage</th>
+                <!-- <th scope="col"></th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of expenses | filter : searchText">
+                <td>
+                  {{expense.createdAt | date}}
+                </td>
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{expense.name}}</span>
+                    </div>
+                  </div>
+                </th>
+                <td>
+                  {{expense.amount | currency}}
+                </td>
+                <td>
+                  <div class="avatar-group">
+                    <a href="javascript:void(0)" class="avatar avatar-sm" data-toggle="tooltip"
+                      data-original-title="Ryan Tompson" placement="right" ngbTooltip="{{expense.createdBy.name}}">
+                      <img alt="{{expense.createdBy.name}}" src="{{expense.createdBy.picture}}" class="rounded-circle">
+                    </a>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <span class="mr-2">{{((expense.amount / totalExpenses) * 100).toFixed(2) + '%'}}</span>
+                    <div>
+                      <div class="progress">
+                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                          aria-valuemax="100" [style.width]="((expense.amount / totalExpenses) * 100).toFixed(2) + '%'">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <!-- <td class="text-right">
+                  <div ngbDropdown placement="bottom-right">
+                    <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                      <a class="dropdown-item" href="javascript:void(0)" (click)="open(classic1, expense)">Edit</a>
+                      <a class="dropdown-item" href="javascript:void(0)">Delete</a>
+                    </div>
+                  </div>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

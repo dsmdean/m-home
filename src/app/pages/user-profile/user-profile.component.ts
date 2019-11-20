@@ -10,7 +10,7 @@ import { UserService } from '../../services/user';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  user: {};
+  user: {_id, name, picture, email};
   error: { show: Boolean, type: String, message: String, data };
 
   constructor(private EnvService: EnvService, public auth: AuthenticationService, private router: Router, public userService: UserService) {

@@ -20,6 +20,7 @@ export class BudgetComponent implements OnInit {
   hoveredDate: NgbDate;
   month: number;
   months: any[];
+  searchText: any;
 
   constructor(private EnvService: EnvService, calendar: NgbCalendar, public auth: AuthenticationService, public budgetService: BudgetService, private router: Router, public flowService: CashflowService) {
     this.EnvService.setTitle("Budget");
@@ -28,6 +29,7 @@ export class BudgetComponent implements OnInit {
     this.totalExpenses = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.searchText;
   }
 
   ngOnInit() {

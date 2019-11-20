@@ -15,7 +15,7 @@ import { FilterPipe } from '../../pipes/filter.pipe';
   providers: [ReversePipe, FilterPipe]
 })
 export class BudgetDetailsComponent implements OnInit {
-  budget: { id, planned, percentage };
+  budget: { id, name, description, planned, percentage };
   error: { show: Boolean, type: String, message: String, data };
   user: { _id };
   queryParams: { budgetId, month };
@@ -26,11 +26,12 @@ export class BudgetDetailsComponent implements OnInit {
   totalExpense: number;
   month: number;
   months: any[];
+  searchText: any;
 
   constructor(private EnvService: EnvService, private reverse: ReversePipe, public auth: AuthenticationService, public budgetService: BudgetService, public flowService: CashflowService, private activeRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {
     this.EnvService.setTitle("Budget Details");
     this.user = this.auth.getUser();
-    this.budget = { id: '', planned: 0, percentage: 0 };
+    this.budget = { id: '', name: '', description: '', planned: 0, percentage: 0 };
     this.error = { show: false, type: '', message: '', data: null };
     // @ts-ignore
     this.queryParams = this.activeRoute.params._value;
@@ -38,6 +39,7 @@ export class BudgetDetailsComponent implements OnInit {
     this.totalExpense = 0;
     this.month = this.queryParams.month;
     this.months = this.EnvService.getEnv().months;
+    this.searchText;
   }
 
   ngOnInit() {

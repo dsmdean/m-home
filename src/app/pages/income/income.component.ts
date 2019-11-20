@@ -23,6 +23,7 @@ export class IncomeComponent implements OnInit {
   lastAmount: number;
   month: number;
   months: any[];
+  searchText: any;
 
   constructor(private EnvService: EnvService, private reverse: ReversePipe, public auth: AuthenticationService, private router: Router, public flowService: CashflowService, private modalService: NgbModal) {
     this.EnvService.setTitle("Income");
@@ -33,6 +34,7 @@ export class IncomeComponent implements OnInit {
     this.lastAmount = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.searchText;
   }
 
   ngOnInit() {

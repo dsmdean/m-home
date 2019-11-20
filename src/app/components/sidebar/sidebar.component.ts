@@ -31,7 +31,7 @@ export class SidebarComponent implements OnInit {
 
   public menuItems: any[];
   public isCollapsed = true;
-  user: {};
+  user: { _id, name, picture };
 
   constructor(private router: Router, public auth: AuthenticationService) {
     this.user = this.auth.getUser();

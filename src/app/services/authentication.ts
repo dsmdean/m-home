@@ -14,7 +14,7 @@ export class AuthenticationService {
   TOKEN_KEY = 'Token';
   TOKEN_EXP = 'TokenExp';
   authenticated: Boolean;
-  user: { _id };
+  user: { _id, name, picture, email };
   authToken: string;
   headers: any;
   tokenExp: Date;
@@ -22,7 +22,7 @@ export class AuthenticationService {
 
   constructor(@Inject(LOCAL_STORAGE) private storage: StorageService, public http: Http, private EnvService: EnvService, private router: Router) {
     this.env = EnvService.getEnv();
-    this.user = { _id: '' };
+    this.user = { _id: '', name: '', picture: '', email: '' };
     // this.loadUserCredentials();
   }
 
@@ -107,7 +107,7 @@ export class AuthenticationService {
     // console.log('Destroy Credentials');
     this.authToken = undefined;
     this.tokenExp = undefined;
-    this.user = { _id: '' };
+    this.user = { _id: '', name: '', picture: '', email: '' };
     this.authenticated = false;
     this.setHeaders(this.authToken);
     this.stopInterval();

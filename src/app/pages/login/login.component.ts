@@ -8,12 +8,12 @@ import { AuthenticationService } from '../../services/authentication';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  user: { username, password };
+  user: { email, password };
   error: {show: Boolean, message: String, data};
 
   constructor(public auth: AuthenticationService, private router: Router) {
     this.user = {
-      username: '',
+      email: '',
       password: ''
     };
     this.error = {show: false, message: '', data: null};

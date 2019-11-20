@@ -10,14 +10,14 @@ import { BudgetService } from '../../services/budget';
   styleUrls: ['./budget-add.component.scss']
 })
 export class BudgetAddComponent implements OnInit {
-  budget: { access: [{ user: String, created: Boolean }], userId: String };
+  budget: { name, planned, description, access: [{ user: String, created: Boolean }], userId: String };
   error: { show: Boolean, type: String, message: String, data };
-  user: { _id };
+  user: { _id, name, picture };
 
   constructor(private EnvService: EnvService, public auth: AuthenticationService, public budgetService: BudgetService, private router: Router) {
     this.EnvService.setTitle("Add Budget");
     this.user = this.auth.getUser();
-    this.budget = { access: [{ user: this.user._id, created: true }], userId: this.user._id };
+    this.budget = { name: '', planned: 0, description: '', access: [{ user: this.user._id, created: true }], userId: this.user._id };
     this.error = { show: false, type: '', message: '', data: null };
   }
 

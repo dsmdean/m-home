@@ -18,6 +18,7 @@ export class ExpenseComponent implements OnInit {
   expenses: [{ budget, createdBy, amount, percentage }];
   month: number;
   months: any[];
+  searchText: any;
 
   constructor(private EnvService: EnvService, private reverse: ReversePipe, public auth: AuthenticationService, private router: Router, public flowService: CashflowService) {
     this.EnvService.setTitle("Expenses");
@@ -25,6 +26,7 @@ export class ExpenseComponent implements OnInit {
     this.totalExpenses = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.searchText;
   }
 
   ngOnInit() {

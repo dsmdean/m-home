@@ -56,6 +56,15 @@
                           <div class="form-group mb-3" [ngClass]="{'focused':focus===true}">
                             <div class="input-group input-group-alternative">
                               <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
+                              </div>
+                              <input class="form-control" placeholder="Date" type="date" (focus)="focus=true"
+                                (blur)="focus=false" name="date" [(ngModel)]="newIncome.date">
+                            </div>
+                          </div>
+                          <div class="form-group mb-3" [ngClass]="{'focused':focus===true}">
+                            <div class="input-group input-group-alternative">
+                              <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="ni ni-single-copy-04"></i></span>
                               </div>
                               <input class="form-control" placeholder="Name" type="text" (focus)="focus=true"
@@ -99,7 +108,7 @@
             <tbody>
               <tr *ngFor="let singleIncome of income | filter : searchText">
                 <td>
-                  {{singleIncome.createdAt | date}}
+                  {{singleIncome.date | date}}
                 </td>
                 <th scope="row">
                   <div class="media align-items-center">

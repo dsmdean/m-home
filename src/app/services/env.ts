@@ -11,7 +11,8 @@ export class EnvService {
   constructor(private titleService: Title, public http: HttpClient) {
     this.env = { title: '', url: '' };
     this.env.name = 'Menso Home | ';
-    this.env.url = 'https://menso-home.herokuapp.com';
+    // this.env.url = 'https://menso-home.herokuapp.com';
+    this.env.url = 'http://localhost:9001';
     this.env.months = new Array();
 
     this.env.months[0] = "January";

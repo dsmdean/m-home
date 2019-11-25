@@ -4,14 +4,13 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { EnvService } from '../../services/env';
 import { AuthenticationService } from '../../services/authentication';
 import { CashflowService } from '../../services/cashflow';
-import { ReversePipe } from '../../pipes/reverse.pipe';
 import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-income',
   templateUrl: './income.component.html',
   styleUrls: ['./income.component.scss'],
-  providers: [ReversePipe, FilterPipe]
+  providers: [FilterPipe]
 })
 export class IncomeComponent implements OnInit {
   error: { show: Boolean, type: String, message: String, data };
@@ -25,7 +24,7 @@ export class IncomeComponent implements OnInit {
   months: any[];
   searchText: any;
 
-  constructor(private EnvService: EnvService, private reverse: ReversePipe, public auth: AuthenticationService, private router: Router, public flowService: CashflowService, private modalService: NgbModal) {
+  constructor(private EnvService: EnvService, public auth: AuthenticationService, private router: Router, public flowService: CashflowService, private modalService: NgbModal) {
     this.EnvService.setTitle("Income");
     this.user = this.auth.getUser();
     this.error = { show: false, type: '', message: '', data: null };
@@ -75,6 +74,8 @@ export class IncomeComponent implements OnInit {
     if (this.newIncome.id != undefined) {
       this.editIncome();
     } else {
+      // @ts-ignore
+      this.newIncome.date = new Date(this.newIncome.date);
       this.createIncome();
     }
   }
@@ -82,6 +83,7 @@ export class IncomeComponent implements OnInit {
   createIncome() {
     this.flowService.postFlow(this.newIncome)
       .subscribe(data => {
+        console.log(this.newIncome);
         this.caluculateIncomePercentage(data, false);
       }, this.asyncError);
   }
@@ -95,6 +97,7 @@ export class IncomeComponent implements OnInit {
 
   caluculateIncomePercentage(data, edit) {
     this.newIncome = data.cashflows;
+    console.log(data);
 
     if (edit) {
       this.totalIncome -= this.lastAmount;
@@ -112,7 +115,6 @@ export class IncomeComponent implements OnInit {
     this.flowService.getCashFlowIncome(this.month)
       .subscribe(data => {
         this.income = data.cashflows;
-        this.income = this.reverse.transform(this.income);
         this.calculatePercentages(this.income);
       }, this.asyncError);
   }

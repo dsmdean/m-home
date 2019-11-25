@@ -53,7 +53,7 @@
             <tbody>
               <tr *ngFor="let expense of expenses | filter : searchText">
                 <td>
-                  {{expense.createdAt | date}}
+                  {{expense.date | date}}
                 </td>
                 <th scope="row">
                   <div class="media align-items-center">

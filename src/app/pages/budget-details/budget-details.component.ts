@@ -5,14 +5,13 @@ import { EnvService } from '../../services/env';
 import { AuthenticationService } from '../../services/authentication';
 import { BudgetService } from '../../services/budget';
 import { CashflowService } from '../../services/cashflow';
-import { ReversePipe } from '../../pipes/reverse.pipe';
 import { FilterPipe } from '../../pipes/filter.pipe';
 
 @Component({
   selector: 'app-budget-details',
   templateUrl: './budget-details.component.html',
   styleUrls: ['./budget-details.component.scss'],
-  providers: [ReversePipe, FilterPipe]
+  providers: [FilterPipe]
 })
 export class BudgetDetailsComponent implements OnInit {
   budget: { id, name, description, planned, percentage };
@@ -28,7 +27,7 @@ export class BudgetDetailsComponent implements OnInit {
   months: any[];
   searchText: any;
 
-  constructor(private EnvService: EnvService, private reverse: ReversePipe, public auth: AuthenticationService, public budgetService: BudgetService, public flowService: CashflowService, private activeRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {
+  constructor(private EnvService: EnvService, public auth: AuthenticationService, public budgetService: BudgetService, public flowService: CashflowService, private activeRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {
     this.EnvService.setTitle("Budget Details");
     this.user = this.auth.getUser();
     this.budget = { id: '', name: '', description: '', planned: 0, percentage: 0 };
@@ -138,7 +137,6 @@ export class BudgetDetailsComponent implements OnInit {
     this.flowService.getFlowByBudgetId(this.queryParams.budgetId, this.month)
       .subscribe(data => {
         this.expenses = data.cashflow;
-        this.expenses = this.reverse.transform(this.expenses);
         this.caluculateBudgetPercentage();
       }, this.asyncError);
   }

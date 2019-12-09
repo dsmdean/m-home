@@ -73,13 +73,14 @@ export class DashboardComponent implements OnInit {
       }, this.asyncError);
   }
 
-  orderByMonth(chart, flow) {
+  orderByMonth(data, flow) {
     for (let i = 0; i < this.months.length; i++) {
-      chart[i] = 0
+      data[i] = 0
     }
 
     flow.forEach(element => {
-      chart[new Date(element.date).getMonth()] += element.amount;
+      let amountParsed = parseFloat(element.amount);
+      data[new Date(element.date).getMonth()] = parseFloat(data[new Date(element.date).getMonth()].toFixed(2)) + amountParsed;
     });
   }
 

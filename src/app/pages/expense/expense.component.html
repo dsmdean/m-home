@@ -32,8 +32,7 @@
             </div>
           </div>
           <div class="row align-items-center">
-            <div cla
-            ss="col-8">
+            <div cla ss="col-8">
               <small>Total Expenses: {{totalExpenses | currency}}</small>
             </div>
           </div>
@@ -43,6 +42,7 @@
             <thead class="thead-light">
               <tr>
                 <th scope="col">Date</th>
+                <th scope="col">Category</th>
                 <th scope="col">Name</th>
                 <th scope="col">Amount</th>
                 <th scope="col">Created by</th>
@@ -55,12 +55,11 @@
                 <td>
                   {{expense.date | date}}
                 </td>
-                <th scope="row">
-                  <div class="media align-items-center">
-                    <div class="media-body">
-                      <span class="mb-0 text-sm">{{expense.name}}</span>
-                    </div>
-                  </div>
+                <th>
+                  {{expense.budget.name}}
+                </th>
+                <th>
+                  {{expense.name}}
                 </th>
                 <td>
                   {{expense.amount | currency}}

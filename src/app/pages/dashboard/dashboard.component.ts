@@ -79,8 +79,9 @@ export class DashboardComponent implements OnInit {
     }
 
     flow.forEach(element => {
-      let amountParsed = parseFloat(element.amount);
-      data[new Date(element.date).getMonth()] = parseFloat(data[new Date(element.date).getMonth()].toFixed(2)) + amountParsed;
+      let amountParsed = data[new Date(element.date).getMonth()] + element.amount;
+      console.log(parseFloat(amountParsed).toFixed(2));
+      data[new Date(element.date).getMonth()] = amountParsed;
     });
   }
 

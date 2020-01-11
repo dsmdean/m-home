@@ -38,8 +38,8 @@ export class CashflowService {
       .map(res => res.json());
   }
 
-  getFlowByBudgetId(budgetId, month) {
-    return this.http.get(this.env.url + '/cashflows/budget/' + budgetId + '/' + month, this.auth.getHeaders())
+  getFlowByBudgetId(budgetId, month, year) {
+    return this.http.get(this.env.url + '/cashflows/budget/' + budgetId + '/' + month + '/' + year, this.auth.getHeaders())
       .map(res => res.json());
   }
 
@@ -53,13 +53,13 @@ export class CashflowService {
       .map(res => res.json());
   }
 
-  getCashFlowExpenses(month) {
-    return this.http.get(this.env.url + '/cashflows/expenses/' + month, this.auth.getHeaders())
+  getCashFlowExpenses(month, year) {
+    return this.http.get(this.env.url + '/cashflows/expenses/' + month + '/' + year, this.auth.getHeaders())
       .map(res => res.json());
   }
 
-  getCashFlowIncome(month) {
-    return this.http.get(this.env.url + '/cashflows/income/' + month, this.auth.getHeaders())
+  getCashFlowIncome(month, year) {
+    return this.http.get(this.env.url + '/cashflows/income/' + month + '/' + year, this.auth.getHeaders())
       .map(res => res.json());
   }
 }

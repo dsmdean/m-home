@@ -44,7 +44,7 @@ export class AuthenticationService {
 
       this.checkExp = setInterval(() => {
         if (new Date(Date.now()) >= new Date(this.tokenExp)) {
-          // console.log('Expired!');
+          console.log('Expired!');
           this.logout()
             .subscribe(data => {
               this.destroyUserCredentials();
@@ -56,7 +56,7 @@ export class AuthenticationService {
             });
           this.stopInterval();
         } else {
-          // console.log('Not Expired!');
+          console.log('Not Expired!');
         }
       }, 60000);
 

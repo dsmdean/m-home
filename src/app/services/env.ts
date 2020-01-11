@@ -12,7 +12,9 @@ export class EnvService {
     this.env = { title: '', url: '' };
     this.env.name = 'Menso Home | ';
     this.env.url = 'https://menso-home.herokuapp.com';
+    // this.env.url = 'http://localhost:9001';
     this.env.months = new Array();
+    this.env.startingYear = 2015;
 
     this.env.months[0] = "January";
     this.env.months[1] = "February";

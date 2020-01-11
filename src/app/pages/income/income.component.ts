@@ -22,6 +22,9 @@ export class IncomeComponent implements OnInit {
   lastAmount: number;
   month: number;
   months: any[];
+  year: number;
+  years: any[];
+  startingYear: number;
   searchText: any;
 
   constructor(private EnvService: EnvService, public auth: AuthenticationService, private router: Router, public flowService: CashflowService, private modalService: NgbModal) {
@@ -33,7 +36,14 @@ export class IncomeComponent implements OnInit {
     this.lastAmount = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.year = new Date().getFullYear();
+    this.years = [];
+    this.startingYear = this.EnvService.getEnv().startingYear;
     this.searchText;
+
+    while (this.startingYear <= this.year) {
+      this.years.push(this.startingYear++);
+    }
   }
 
   ngOnInit() {
@@ -112,7 +122,7 @@ export class IncomeComponent implements OnInit {
   }
 
   getIncome() {
-    this.flowService.getCashFlowIncome(this.month)
+    this.flowService.getCashFlowIncome(this.month, this.year)
       .subscribe(data => {
         this.income = data.cashflows;
         this.calculatePercentages(this.income);
@@ -133,7 +143,7 @@ export class IncomeComponent implements OnInit {
     this.error.message = error.status + ' ' + error.statusText;
   }
 
-  onMonthchange() {
+  onDateChange() {
     this.getIncome();
   }
 }

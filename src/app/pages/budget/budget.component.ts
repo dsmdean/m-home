@@ -20,6 +20,9 @@ export class BudgetComponent implements OnInit {
   hoveredDate: NgbDate;
   month: number;
   months: any[];
+  year: number;
+  years: any[];
+  startingYear: number;
   searchText: any;
 
   constructor(private EnvService: EnvService, calendar: NgbCalendar, public auth: AuthenticationService, public budgetService: BudgetService, private router: Router, public flowService: CashflowService) {
@@ -29,7 +32,14 @@ export class BudgetComponent implements OnInit {
     this.totalExpenses = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.year = new Date().getFullYear();
+    this.years = [];
+    this.startingYear = this.EnvService.getEnv().startingYear;
     this.searchText;
+
+    while (this.startingYear <= this.year) {
+      this.years.push(this.startingYear++);
+    }
   }
 
   ngOnInit() {
@@ -50,7 +60,7 @@ export class BudgetComponent implements OnInit {
 
   getCashFlow() {
     this.setBudgetActuals(0);
-    this.flowService.getCashFlowExpenses(this.month)
+    this.flowService.getCashFlowExpenses(this.month, this.year)
       .subscribe(data => {
         var expenses = data.cashflows;
         this.calculatePercentages(expenses);
@@ -83,7 +93,7 @@ export class BudgetComponent implements OnInit {
     this.error.message = error.status + ' ' + error.statusText;
   }
 
-  onMonthchange() {
+  onDateChange() {
     this.getCashFlow();
   }
 }

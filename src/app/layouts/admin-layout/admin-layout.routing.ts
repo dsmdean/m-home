@@ -16,7 +16,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: 'user-profile', component: UserProfileComponent },
   { path: 'budget', component: BudgetComponent },
   { path: 'budget/add', component: BudgetAddComponent },
-  { path: 'budget/:budgetId/:month', component: BudgetDetailsComponent },
+  { path: 'budget/:budgetId/:month/:year', component: BudgetDetailsComponent },
   { path: 'expense', component: ExpenseComponent },
   { path: 'income', component: IncomeComponent },
   { path: 'tables', component: TablesComponent },

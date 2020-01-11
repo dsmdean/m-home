@@ -17,7 +17,7 @@ export class BudgetDetailsComponent implements OnInit {
   budget: { id, name, description, planned, percentage };
   error: { show: Boolean, type: String, message: String, data };
   user: { _id };
-  queryParams: { budgetId, month };
+  queryParams: { budgetId, month, year };
   closeResult: string;
   newExpense: { budget, createdBy, amount, percentage };
   expenses: [{ budget, createdBy, amount, percentage }];
@@ -25,6 +25,9 @@ export class BudgetDetailsComponent implements OnInit {
   totalExpense: number;
   month: number;
   months: any[];
+  year: number;
+  years: any[];
+  startingYear: number;
   searchText: any;
 
   constructor(private EnvService: EnvService, public auth: AuthenticationService, public budgetService: BudgetService, public flowService: CashflowService, private activeRoute: ActivatedRoute, private router: Router, private modalService: NgbModal) {
@@ -38,7 +41,14 @@ export class BudgetDetailsComponent implements OnInit {
     this.totalExpense = 0;
     this.month = this.queryParams.month;
     this.months = this.EnvService.getEnv().months;
+    this.year = this.queryParams.year;
+    this.years = [];
+    this.startingYear = this.EnvService.getEnv().startingYear;
     this.searchText;
+
+    while (this.startingYear <= this.year) {
+      this.years.push(this.startingYear++);
+    }
   }
 
   ngOnInit() {
@@ -134,7 +144,7 @@ export class BudgetDetailsComponent implements OnInit {
   }
 
   getFlowByBudgetId() {
-    this.flowService.getFlowByBudgetId(this.queryParams.budgetId, this.month)
+    this.flowService.getFlowByBudgetId(this.queryParams.budgetId, this.month, this.year)
       .subscribe(data => {
         this.expenses = data.cashflow;
         this.caluculateBudgetPercentage();
@@ -161,7 +171,7 @@ export class BudgetDetailsComponent implements OnInit {
     console.log(JSON.parse(error._body));
   }
 
-  onMonthchange() {
+  onDateChange() {
     this.getFlowByBudgetId();
   }
 }

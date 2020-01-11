@@ -17,6 +17,9 @@ export class ExpenseComponent implements OnInit {
   expenses: [{ budget, createdBy, amount, percentage }];
   month: number;
   months: any[];
+  year: number;
+  years: any[];
+  startingYear: number;
   searchText: any;
 
   constructor(private EnvService: EnvService, public auth: AuthenticationService, private router: Router, public flowService: CashflowService) {
@@ -25,7 +28,14 @@ export class ExpenseComponent implements OnInit {
     this.totalExpenses = 0;
     this.month = this.EnvService.getMonth();
     this.months = this.EnvService.getEnv().months;
+    this.year = new Date().getFullYear();
+    this.years = [];
+    this.startingYear = this.EnvService.getEnv().startingYear;
     this.searchText;
+
+    while (this.startingYear <= this.year) {
+      this.years.push(this.startingYear++);
+    }
   }
 
   ngOnInit() {
@@ -37,7 +47,7 @@ export class ExpenseComponent implements OnInit {
   }
 
   getExpenses() {
-    this.flowService.getCashFlowExpenses(this.month)
+    this.flowService.getCashFlowExpenses(this.month, this.year)
       .subscribe(data => {
         this.expenses = data.cashflows;
         this.calculatePercentages(this.expenses);
@@ -58,7 +68,7 @@ export class ExpenseComponent implements OnInit {
     this.error.message = error.status + ' ' + error.statusText;
   }
 
-  onMonthchange() {
+  onDateChange() {
     this.getExpenses();
   }
 }

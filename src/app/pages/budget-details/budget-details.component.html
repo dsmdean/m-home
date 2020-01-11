@@ -53,14 +53,14 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">Name</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative"
+                    <input type="text" id="budget-name" class="form-control form-control-alternative"
                       placeholder="Budget name" name="name" [(ngModel)]="budget.name">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-planned">Planned budget</label>
-                    <input type="number" id="input-planned" class="form-control form-control-alternative"
+                    <input type="number" id="budget-planned" class="form-control form-control-alternative"
                       placeholder="Planned budget" name="planned" [(ngModel)]="budget.planned">
                   </div>
                 </div>
@@ -95,16 +95,31 @@
           <div class="row justify-content-between">
             <div class="col-6">
               <h3 class="mb-0">
-                Expenses - <small>Showing for {{months[month]}}</small>&nbsp;&nbsp;
+                Expenses - <small>Showing for {{months[month] + ' ' + year}}</small>&nbsp;&nbsp;
                 <span *ngIf="error.show && error.type=='warning'" class="badge badge-pill badge-danger text-uppercase">
                   <strong *ngIf="error.type == 'warning'">Warning!</strong> {{error.message}}
                 </span>
-                <div class="form-group">
-                  <select class="form-control" id="monthselection" [(ngModel)]="month"
-                    (ngModelChange)="onMonthchange()">
-                    <option *ngFor="let sMonth of months; let i = index" [value]="i">{{sMonth}}</option>
-                  </select>
-                </div>
+                <form role="form" (ngSubmit)="onDateChange()">
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <div class="form-group">
+                        <select class="form-control" name="monthselection" [(ngModel)]="month">
+                          <option *ngFor="let sMonth of months; let i = index" [value]="i">{{sMonth}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <div class="form-group">
+                        <select class="form-control" name="yearselection" [(ngModel)]="year">
+                          <option *ngFor="let sYear of years;" [value]="sYear">{{sYear}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <button type="submit" class="btn btn-md btn-outline-default">Filter</button>
+                    </div>
+                  </div>
+                </form>
               </h3>
             </div>
             <div class="col-4 text-right">

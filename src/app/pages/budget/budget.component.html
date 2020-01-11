@@ -100,16 +100,31 @@
           <div class="row justify-content-between">
             <div class="col-6">
               <h3 class="mb-0">
-                Budgets - <small>Showing for {{months[month]}}</small>
+                Budgets - <small>Showing for {{months[month] + ' ' + year}}</small>
                 <span *ngIf="error.show && error.type=='warning'" class="badge badge-pill badge-danger text-uppercase">
                   <strong *ngIf="error.type == 'warning'">Warning!</strong> {{error.message}}
                 </span>
-                <div class="form-group">
-                  <select class="form-control" id="monthselection" [(ngModel)]="month"
-                    (ngModelChange)="onMonthchange()">
-                    <option *ngFor="let sMonth of months; let i = index" [value]="i">{{sMonth}}</option>
-                  </select>
-                </div>
+                <form role="form" (ngSubmit)="onDateChange()">
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <div class="form-group">
+                        <select class="form-control" name="monthselection" [(ngModel)]="month">
+                          <option *ngFor="let sMonth of months; let i = index" [value]="i">{{sMonth}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-5">
+                      <div class="form-group">
+                        <select class="form-control" name="yearselection" [(ngModel)]="year">
+                          <option *ngFor="let sYear of years;" [value]="sYear">{{sYear}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <button type="submit" class="btn btn-md btn-outline-default">Filter</button>
+                    </div>
+                  </div>
+                </form>
               </h3>
             </div>
             <div class="col-4 text-right">
@@ -148,7 +163,7 @@
                       <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
                     </a> -->
                     <div class="media-body">
-                      <a routerLink="/budget/{{budget.id}}/{{month}}" class="mb-0 text-sm">{{budget.name}}</a>
+                      <a routerLink="/budget/{{budget.id}}/{{month}}/{{year}}" class="mb-0 text-sm">{{budget.name}}</a>
                     </div>
                   </div>
                 </th>
